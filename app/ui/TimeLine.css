@@ -1,0 +1,156 @@
+.timeline-container {
+  margin: 3rem 0;
+  width: 100%;
+  position: relative;
+  overflow-x: scroll;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.timeline-container::-webkit-scrollbar {
+  height: 45px;
+}
+.timeline-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  background-clip: content-box;
+  border-radius: 100%;
+  border: 20px solid transparent;
+}
+
+.entries {
+  margin-right: -10000px;
+  margin-left: 1rem;
+}
+
+.timeline {
+  position: fixed;
+  width: 100%;
+  height: 0.2rem;
+}
+
+.entry {
+  float: left;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+  margin: 0 4rem;
+  margin-top: 0.7rem;
+}
+.entry .dot {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  left: 50%;
+  margin-left: -0.6rem;
+  margin-top: -1.3rem;
+  border-radius: 100%;
+  box-sizing: border-box;
+  background-clip: content-box;
+
+  box-shadow: 0 0.1rem 1rem 0 rgba(0, 0, 0, 0.1),
+    inset 0 0 0.4em rgba(255, 255, 255, 0.1),
+    inset 0 0.4rem 0.1rem rgba(255, 255, 255, 0.3);
+  -moz-transition: height 0.2s linear, width 0.2s linear, margin 0.2s linear,
+    background-color 0.3s ease-out;
+  -o-transition: height 0.2s linear, width 0.2s linear, margin 0.2s linear,
+    background-color 0.3s ease-out;
+  -webkit-transition: height 0.2s linear, width 0.2s linear, margin 0.2s linear,
+    background-color 0.3s ease-out;
+  transition: height 0.2s linear, width 0.2s linear, margin 0.2s linear,
+    background-color 0.3s ease-out;
+}
+
+.label {
+  display: inline-block;
+  position: relative;
+  background-clip: padding-box;
+  margin-top: 1rem;
+  padding: 0.4rem 0.8rem 0.8rem;
+  -moz-transition: margin-top 0.2s linear, background-color 0.2s linear,
+    border-bottom 0.2s linear;
+  -o-transition: margin-top 0.2s linear, background-color 0.2s linear,
+    border-bottom 0.2s linear;
+  -webkit-transition: margin-top 0.2s linear, background-color 0.2s linear,
+    border-bottom 0.2s linear;
+  transition: margin-top 0.2s linear, background-color 0.2s linear,
+    border-bottom 0.2s linear;
+  border-bottom: 0 solid transparent;
+  border-radius: 12px;
+  border: 0.5px solid rgba(255, 255, 255, 0);
+  background: rgba(217, 217, 217, 0.03);
+  box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(90px);
+  border: 0.3px #f2661533 solid;
+}
+.label .time {
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  margin: 0 0 0.4rem;
+  padding: 0 0.3rem 0.3rem;
+  letter-spacing: 1px;
+  display: inline-block;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
+.label .detail {
+  font-size: 0.8rem;
+}
+/* .label:before {
+  content: "";
+  display: block;
+  position: absolute;
+  background-clip: content-box;
+  box-sizing: border-box;
+  width: 1rem;
+  height: 1rem;
+  left: 50%;
+  margin-top: -0.9rem;
+  margin-left: -0.5rem;
+  background: rgba(217, 217, 217, 0.03);
+  box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(90px);
+  -webkit-backdrop-filter: blur(90px);
+  -moz-backdrop-filter: blur(90px);
+  transform-origin: center;
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  z-index: -1;
+} */
+.label a {
+  color: #000;
+  text-decoration: none;
+}
+.label a:before {
+  content: "[";
+}
+.label a:after {
+  content: "]";
+}
+
+.finished-label {
+  border-radius: 12px;
+  background: #b34c1034;
+  box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(90px);
+}
+
+.entry.life .label {
+  background-color: #e1f0e4;
+}
+
+.entry.life:hover .label {
+  background-color: #d0e8d5;
+}
+
+.entry.study .label {
+  background-color: #e1e8f0;
+}
+
+.entry.study:hover .label {
+  background-color: #d0dbe8;
+}
+
+.content-text {
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.692);
+}

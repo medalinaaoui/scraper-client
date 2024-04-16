@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+body {
+  background-image: url("/grid.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.anahowa {
+  background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 91.86%);
+  opacity: 0.07;
+  mix-blend-mode: hard-light;
+  filter: blur(40px);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  backdrop-filter: blur(5px);
+}
+
+h1 {
+  leading-trim: both;
+  text-edge: cap;
+  font-size: 38px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 104.715%; /* 50.263px */
+  text-transform: uppercase;
+}
+
+span {
+  opacity: 0.4;
+  background: linear-gradient(
+    91deg,
+    #fff 65.04%,
+    rgba(153, 153, 153, 0) 97.69%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tracking-card {
+  border-radius: 12px;
+  border: 0.5px solid rgba(255, 255, 255, 0);
+  background: rgba(217, 217, 217, 0.03);
+  box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(90px);
+}
+
+h3 {
+  background: linear-gradient(90deg, #fff 0%, #999 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  leading-trim: both;
+
+  text-edge: cap;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 104.715%;
+}
+
+input {
+  border-radius: 8px;
+  background: rgba(217, 217, 217, 0.04);
+}
+
+p {
+  color: #fff;
+
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+strong {
+  font-weight: 400;
+}
+
+.main-loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f26615;
+  position: relative;
+}
+.main-loader:before,
+.main-loader:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  inset: 0;
+  background: #c5c5c5;
+  transform: rotate(0deg) translate(30px);
+  animation: rotate 1s ease infinite;
+}
+.main-loader:after {
+  animation-delay: 0.5s;
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg) translate(30px);
+  }
+}
