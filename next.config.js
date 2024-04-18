@@ -37,6 +37,21 @@ const nextConfig = {
         hostname: "img.downet.net",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "www.img.downet.net",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "*",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "**",
+        pathname: "**",
+      },
     ],
   },
 };

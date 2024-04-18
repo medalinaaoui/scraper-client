@@ -1,9 +1,9 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import MovieOrSerieCard from "../components/MovieCard";
+import MovieOrSerieCard from "../components/AkwamCard";
 import { useEffect, useState } from "react";
 import ListCard from "../components/ListCard";
-import CrewCard from "../components/CrewCard";
+import CimaCard from "../components/WecimaCard";
 const Search = ({ params }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -43,30 +43,18 @@ const Search = ({ params }: any) => {
             </h2>
             <div className="w-full h-[0.11rem] bg-primary"></div>
           </div>
-          <div className="flex flex-col min-h-screen gap-3">
-            {data?.results?.map((person: any) => (
-              <CrewCard data={person} key={person.id} />
+          {/* <div className="flex flex-col min-h-screen gap-3">
+            {data?.map((movie: any) => (
+              <CimaCard
+                key={movie.index}
+                media_type={movie.type}
+                id={movie.index}
+                title={movie.name}
+                poster_path={movie.poster}
+                url={movie.url}
+              />
             ))}
-          </div>
-          <div className="join flex w-full justify-center">
-            <button
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-              className="join-item btn max-sm:btn-sm bg-primary text-white"
-            >
-              «
-            </button>
-            <button className="join-item btn max-sm:btn-sm bg-primary text-white">
-              الصفحة {currentPage}
-            </button>
-            <button
-              onClick={handleNextPage}
-              disabled={currentPage === data?.total_pages}
-              className="join-item btn max-sm:btn-sm bg-primary text-white"
-            >
-              »
-            </button>
-          </div>
+          </div> */}
         </>
       )}
     </div>

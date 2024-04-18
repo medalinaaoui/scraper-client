@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import MovieOrSerieCard from "../components/MovieCard";
+import MovieOrSerieCard from "../components/AkwamCard";
 import { useEffect, useState } from "react";
 import PersonCard from "../components/PersonCard";
 

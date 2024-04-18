@@ -1,10 +1,8 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import MovieOrSerieCard from "./components/MovieCard";
-// import ListCard from "./components/ListCard";
-// import PersonCard from "./components/PersonCard";
-// import CrewCard from "./components/CrewCard";
+import AkwamCard from "./components/AkwamCard";
 import { useEffect, useState } from "react";
+import AkwamCardSerie from "./components/AkwamCardSerie";
 
 const Search = ({ params }: any) => {
   const { data, isError, isLoading, error, refetch } = useQuery({
@@ -14,6 +12,7 @@ const Search = ({ params }: any) => {
         `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/akwam/${params.query}`
       ).then((res) => res.json()),
   });
+  console.log("🚀 ~ Search ~ data:", data);
   const decodedQuery = decodeURIComponent(params.query);
 
   return (
@@ -31,16 +30,37 @@ const Search = ({ params }: any) => {
             <div className="w-full h-[0.11rem] bg-primary"></div>
           </div>
           <div className="flex flex-col min-h-screen gap-3">
-            {data?.map((media: any) => (
-              <MovieOrSerieCard
-                key={media.index}
-                media_type={"movie"}
-                id={media.index}
-                title={media.name}
-                poster_path={media.poster}
-                url={media.url}
-              />
-            ))}
+            {data?.map((media: any) => {
+              switch (media.type) {
+                case "Movie":
+                  return (
+                    <AkwamCard
+                      key={media.index}
+                      media_type={media.type}
+                      id={media.index}
+                      title={media.name}
+                      poster_path={media.poster}
+                      url={media.url}
+                    />
+                  );
+                  break;
+                case "Serie":
+                  return (
+                    <AkwamCardSerie
+                      key={media.index}
+                      media_type={"Movie"}
+                      id={media.index}
+                      title={media.name}
+                      poster_path={media.poster}
+                      url={media.url}
+                    />
+                  );
+                  break;
+
+                default:
+                  return null; // Handle unknown media types if necessary
+              }
+            })}
           </div>
         </>
       )}

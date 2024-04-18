@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import MovieOrSerieCard from "../components/MovieCard";
+import MovieOrSerieCard from "../components/AkwamCard";
 import { useEffect, useState } from "react";
 
 const Search = ({ params }: any) => {
@@ -43,16 +43,16 @@ const Search = ({ params }: any) => {
             <div className="w-full h-[0.11rem] bg-primary"></div>
           </div>
           <div className="flex flex-col min-h-screen gap-3">
-            {data?.results?.map((serie: any) => (
+            {/* {data?.results?.map((serie: any) => (
               <MovieOrSerieCard
                 key={serie.id}
                 media_type={"tv"}
                 id={serie.id}
                 title={serie.name}
                 poster_path={serie.poster_path}
-                release_date={serie.first_air_date}
+                
               />
-            ))}
+            ))} */}
           </div>
           <div className="join flex w-full justify-center">
             <button

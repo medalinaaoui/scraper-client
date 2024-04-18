@@ -4,14 +4,10 @@ import SmallPoster from "@/app/ui/smallPoster";
 import Link from "next/link";
 import { UseMutationResult, useMutation } from "@tanstack/react-query";
 import axios from "@/lib/axios";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { registerSuccess } from "@/store/userSlice";
-import { useRouter } from "next/navigation";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import mainAxios from "axios";
-const MovieOrSerieCard = ({
+
+const AkwamCard = ({
   id,
   poster_path,
   media_type,
@@ -24,6 +20,41 @@ const MovieOrSerieCard = ({
   title: string;
   url: string;
 }) => {
+  const [showEpisode, setShowEpisode] = useState(false);
+
+  interface Episode {
+    index: number;
+    episode: string;
+    url: string;
+  }
+  const [episode, setEpisode] = useState<Episode[]>([]);
+
+  const episodeMutation: UseMutationResult = useMutation({
+    mutationFn: async (seosonLink) => {
+      return await axios.post("/episode", seosonLink);
+    },
+    onSuccess: (response: any) => {
+      console.log("🚀 ~ episode: response:", response);
+      setEpisode(response?.data);
+    },
+    onError: (error: any) => {
+      console.log("🚀 ~ error:", error);
+      setShowEpisode(false);
+      toast.error("حدث خطأ ما", {
+        style: {
+          borderRadius: "10px",
+          background: "#474747",
+          color: "#fff",
+        },
+      });
+    },
+  });
+
+  const handleEpisodeClick = () => {
+    setShowEpisode(true);
+    episodeMutation.mutate({ url });
+  };
+
   // const router = useRouter();
 
   const [showQuality, setShowQuality] = useState(false);
@@ -41,7 +72,7 @@ const MovieOrSerieCard = ({
       return await axios.post("/akwam/quality", link);
     },
     onSuccess: (response: any) => {
-      console.log("page.tsx:18 ~ Register ~ response:", response);
+      console.log("🚀 ~ quality: response:", response);
       setQuality(response?.data);
     },
     onError: (error: any) => {
@@ -57,7 +88,7 @@ const MovieOrSerieCard = ({
     },
   });
 
-  const handleClick = () => {
+  const handleClick = (url: string) => {
     setShowQuality(true);
     mutation.mutate({ url });
   };
@@ -72,6 +103,8 @@ const MovieOrSerieCard = ({
       return await axios.post("/link", link);
     },
     onSuccess: (response: any) => {
+      console.log("🚀 ~ response:", response);
+
       setDownloadLink(response?.data);
     },
     onError: (error: any) => {
@@ -89,16 +122,17 @@ const MovieOrSerieCard = ({
 
   const handleQualityClick = (url: string) => {
     setShowDownloadLink(true);
-    DownloadLinkMutation.mutate({ url });
+    url ? DownloadLinkMutation.mutate({ url }) : setShowDownloadLink(false);
   };
 
   return (
     <article className="akwam-card grid gap-2 w-full">
-      <div onClick={handleClick} className="flex gap-4 overflow-hidden w-full">
+      <div
+        onClick={handleEpisodeClick}
+        className="flex gap-4 overflow-hidden w-full"
+      >
         <div className="flex items-center flex-col sm:gap-1">
-          {poster_path === null ||
-          poster_path === undefined ||
-          poster_path === "" ? (
+          {poster_path === null || poster_path === undefined ? (
             <SmallNoImage
               id={id}
               serie={media_type === "tv"}
@@ -119,6 +153,20 @@ const MovieOrSerieCard = ({
           </h3>
         </div>
       </div>
+
+      {showEpisode && (
+        <div className="grid grid-cols-5 gap-2 mt-4">
+          {episodeMutation.isPending ? (
+            <Button disabled>...</Button>
+          ) : (
+            episode?.map((q) => (
+              <div className="tooltip" key={q.index} data-tip={q.episode}>
+                <Button onClick={() => handleClick(q.url)}>{q.index}</Button>
+              </div>
+            ))
+          )}
+        </div>
+      )}
 
       {showQuality && (
         <div className="flex gap-2 mt-4">
@@ -141,9 +189,14 @@ const MovieOrSerieCard = ({
               ...
             </Button>
           ) : (
-            <Button className="bg-green-700">
-              <Link href={downloadLink.url}>تحميل</Link>
-            </Button>
+            downloadLink.url !== "" && (
+              <Link
+                href={downloadLink.url}
+                className="flex h-10 items-center rounded-lg bg-green-600 px-12 text-sm font-medium text-white transition-colors hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 active:bg-green-800 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+              >
+                تحميل
+              </Link>
+            )
           )}
         </div>
       )}
@@ -152,4 +205,4 @@ const MovieOrSerieCard = ({
     </article>
   );
 };
-export default MovieOrSerieCard;
+export default AkwamCard;

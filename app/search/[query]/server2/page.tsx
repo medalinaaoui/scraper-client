@@ -1,7 +1,8 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import MovieOrSerieCard from "../components/MovieCard";
+
 import { useEffect, useState } from "react";
+import CimaCard from "@/app/search/[query]/components/WecimaCard";
 
 const Search = ({ params }: any) => {
   const { data, isError, isLoading, error, refetch } = useQuery({
@@ -28,12 +29,11 @@ const Search = ({ params }: any) => {
           </div>
           <div className="flex flex-col min-h-screen gap-3">
             {data?.map((movie: any) => (
-              <MovieOrSerieCard
-                key={movie.id}
-                media_type={"movie"}
-                id={movie.id}
+              <CimaCard
+                key={movie.index}
+                id={movie.index}
                 title={movie.name}
-                poster_path={""}
+                poster_path={movie.poster}
                 url={movie.url}
               />
             ))}
