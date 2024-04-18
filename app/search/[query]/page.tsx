@@ -37,7 +37,7 @@ const Search = ({ params }: any) => {
                 media_type={"movie"}
                 id={media.index}
                 title={media.name}
-                poster_path={""}
+                poster_path={media.poster}
                 url={media.url}
               />
             ))}

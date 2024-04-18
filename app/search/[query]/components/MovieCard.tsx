@@ -26,22 +26,28 @@ const MovieOrSerieCard = ({
 }) => {
   // const router = useRouter();
 
+  const [showQuality, setShowQuality] = useState(false);
+
+  interface Quality {
+    index: number;
+    quality: string;
+    size: string;
+    url: string;
+  }
+  const [quality, setQuality] = useState<Quality[]>([]);
+
   const mutation: UseMutationResult = useMutation({
     mutationFn: async (link) => {
       return await axios.post("/akwam/quality", link);
     },
     onSuccess: (response: any) => {
       console.log("page.tsx:18 ~ Register ~ response:", response);
-      toast.success("quality", {
-        style: {
-          borderRadius: "10px",
-          background: "#474747",
-          color: "#fff",
-        },
-      });
+      setQuality(response?.data);
     },
     onError: (error: any) => {
-      toast.error("didn't get the quality", {
+      console.log("🚀 ~ error:", error);
+      setShowQuality(false);
+      toast.error("حدث خطأ ما", {
         style: {
           borderRadius: "10px",
           background: "#474747",
@@ -56,10 +62,38 @@ const MovieOrSerieCard = ({
     mutation.mutate({ url });
   };
 
-  const [showQuality, setShowQuality] = useState(false);
+  const [showDownloadLink, setShowDownloadLink] = useState(false);
+  const [downloadLink, setDownloadLink] = useState<{ url: string }>({
+    url: "",
+  });
+
+  const DownloadLinkMutation: UseMutationResult = useMutation({
+    mutationFn: async (link) => {
+      return await axios.post("/link", link);
+    },
+    onSuccess: (response: any) => {
+      setDownloadLink(response?.data);
+    },
+    onError: (error: any) => {
+      console.log("🚀 ~ error:", error);
+      setShowDownloadLink(false);
+      toast.error("حدث خطأ ما", {
+        style: {
+          borderRadius: "10px",
+          background: "#474747",
+          color: "#fff",
+        },
+      });
+    },
+  });
+
+  const handleQualityClick = (url: string) => {
+    setShowDownloadLink(true);
+    DownloadLinkMutation.mutate({ url });
+  };
 
   return (
-    <article className="grid gap-2 w-full">
+    <article className="akwam-card grid gap-2 w-full">
       <div onClick={handleClick} className="flex gap-4 overflow-hidden w-full">
         <div className="flex items-center flex-col sm:gap-1">
           {poster_path === null ||
@@ -72,9 +106,7 @@ const MovieOrSerieCard = ({
             />
           ) : (
             <SmallPoster
-              serie={media_type === "tv"}
-              id={id}
-              poster={`https://image.tmdb.org/t/p/w342${poster_path}`}
+              poster={poster_path}
               text={title}
               className="lg:w-[5.625rem] w-14 sm:w-20 md:w-28"
             />
@@ -93,7 +125,25 @@ const MovieOrSerieCard = ({
           {mutation.isPending ? (
             <Button disabled>...</Button>
           ) : (
-            <Button>720p</Button>
+            quality?.map((q) => (
+              <Button onClick={() => handleQualityClick(q.url)} key={q.index}>
+                {q.quality}
+              </Button>
+            ))
+          )}
+        </div>
+      )}
+
+      {showDownloadLink && (
+        <div className="flex gap-2 mt-4">
+          {DownloadLinkMutation.isPending ? (
+            <Button className="bg-green-700" disabled>
+              ...
+            </Button>
+          ) : (
+            <Button className="bg-green-700">
+              <Link href={downloadLink.url}>تحميل</Link>
+            </Button>
           )}
         </div>
       )}

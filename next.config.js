@@ -32,6 +32,11 @@ const nextConfig = {
         hostname: "www.themoviedb.org",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "img.downet.net",
+        pathname: "**",
+      },
     ],
   },
 };

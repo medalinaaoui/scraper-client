@@ -3,13 +3,11 @@ import clsx from "clsx";
 import Link from "next/link";
 
 type Props = {
-  serie?: boolean;
   text: string;
   poster: string;
-  id: string | number;
   className?: string;
 };
-const SmallPoster = ({ serie, className, id, text, poster }: Props) => {
+const SmallPoster = ({ className, text, poster }: Props) => {
   return (
     <div
       className={clsx(

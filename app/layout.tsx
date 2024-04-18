@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html className="bg-bgcolor text-white">
+    <html dir="rtl" className="bg-bgcolor text-white">
       <head>
         <meta http-equiv="content-language" content="ar" />
       </head>
