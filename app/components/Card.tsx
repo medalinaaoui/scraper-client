@@ -12,7 +12,7 @@ const Card = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(`/clients/${searchTerm}`);
+    router.push(`/search/${searchTerm}`);
   };
   return (
     <div className="flex justify-center flex-col items-center gap-3">
